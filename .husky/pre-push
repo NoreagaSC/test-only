@@ -1,0 +1,10 @@
+echo "🚀 Pre-push hook in action..."
+echo "🧠 Running TypeScript type-checking to prevent runtime disasters..."
+
+if npx tsc --noEmit; then
+  echo "🎯 No TypeScript issues found! Your code is solid. 🎸"
+  exit 0
+else
+  echo "🚨 TypeScript errors detected! Fix them before pushing. 💀"
+  exit 1
+fi

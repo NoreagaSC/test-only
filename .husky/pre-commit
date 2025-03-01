@@ -1,0 +1,10 @@
+echo "🔍✨ Pre-commit hook initiated..."
+echo "📏 Running ESLint & Prettier to ensure code quality..."
+
+if npx lint-staged; then
+  echo "🌟 All checks passed! Your code is clean and beautiful. 🚀"
+  exit 0
+else
+  echo "⛔ Oops! Something needs fixing before you commit. 🛠️"
+  exit 1
+fi
