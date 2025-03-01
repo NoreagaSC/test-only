@@ -1,11 +1,13 @@
-const path = require('path');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
-const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
+import * as webpack from 'webpack';
+import HtmlWebpackPlugin from 'html-webpack-plugin';
+import { CleanWebpackPlugin } from 'clean-webpack-plugin';
+import ReactRefreshWebpackPlugin from '@pmmmwh/react-refresh-webpack-plugin';
+import 'webpack-dev-server';
+import path from 'path';
 
 const isDevelopment = process.env.NODE_ENV !== 'production';
 
-module.exports = {
+const webpackConfig: webpack.Configuration = {
   mode: isDevelopment ? 'development' : 'production',
   entry: './src/index.tsx',
   output: {
@@ -19,7 +21,12 @@ module.exports = {
     rules: [
       {
         test: /\.(ts|tsx)$/,
-        use: 'ts-loader',
+        use: {
+          loader: 'ts-loader',
+          options: {
+            transpileOnly: true,
+          },
+        },
         exclude: /node_modules/,
       },
       {
@@ -52,8 +59,8 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: './public/index.html',
     }),
-    isDevelopment && new ReactRefreshWebpackPlugin(),
-  ].filter(Boolean),
+    isDevelopment ? new ReactRefreshWebpackPlugin() : undefined,
+  ].filter(Boolean) as webpack.WebpackPluginInstance[],
   devServer: {
     static: path.join(__dirname, 'dist'),
     compress: true,
@@ -62,3 +69,5 @@ module.exports = {
     historyApiFallback: true,
   },
 };
+
+export default webpackConfig;

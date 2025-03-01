@@ -12,7 +12,7 @@ import prettierConfig from 'eslint-config-prettier';
 export default [
   js.configs.recommended,
   {
-    ignores: ['node_modules/', 'dist/', 'build/', 'public/', 'webpack.config.js'],
+    ignores: ['node_modules/', 'dist/', 'build/', 'public/', 'webpack.config.ts'],
   },
   {
     files: ['src/**/*.{js,jsx,ts,tsx}'],

@@ -7,8 +7,14 @@
     "strict": true,
     "moduleResolution": "Node",
     "resolveJsonModule": true,
+    "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
     "skipLibCheck": true
+  },
+  "ts-node": {
+    "compilerOptions": {
+      "module": "commonJS"
+    }
   },
   "include": ["src"],
   "exclude": ["node_modules", "dist", "build", "public"]
