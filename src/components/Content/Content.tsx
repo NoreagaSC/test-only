@@ -1,7 +1,6 @@
 import React, { type FC, type ReactElement } from 'react';
 
 import { RotatingCircle } from '../RotatingCircle';
-
 import { GridItem, StyledContent } from './contentStyle';
 
 export const Content: FC = (): ReactElement => {

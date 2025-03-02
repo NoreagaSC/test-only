@@ -63,10 +63,9 @@ export default [
         'error',
         {
           groups: ['builtin', 'external', 'internal', 'parent', 'sibling', 'index'],
-          'newlines-between': 'always',
         },
       ],
-      // 'simple-import-sort/imports': 'error',
+      'simple-import-sort/imports': 'error',
       'simple-import-sort/exports': 'error',
     },
     settings: {

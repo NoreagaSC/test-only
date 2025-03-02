@@ -16,3 +16,5 @@ temp/
 .git/
 .husky/_/
 .env
+
+build
