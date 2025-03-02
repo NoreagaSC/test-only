@@ -4,7 +4,8 @@ const StyledContent = styled.div`
   position: relative;
   width: 1440px;
   height: 1080px;
-  margin-left: 320px;
+  margin: 0 160px 0 320px;
+
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   grid-template-rows: repeat(2, 1fr);

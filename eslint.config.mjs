@@ -12,7 +12,13 @@ import prettierConfig from 'eslint-config-prettier';
 export default [
   js.configs.recommended,
   {
-    ignores: ['node_modules/', 'dist/', 'build/', 'public/', 'webpack.config.ts'],
+    ignores: [
+      'node_modules/',
+      'dist/',
+      'build/',
+      'public/',
+      'webpack.config.ts',
+    ],
   },
   {
     files: ['src/**/*.{js,jsx,ts,tsx}'],
@@ -32,6 +38,10 @@ export default [
         __dirname: 'readonly',
         require: 'readonly',
         exports: 'readonly',
+        HTMLSpanElement: 'readonly',
+        HTMLDivElement: 'readonly',
+        setInterval: 'readonly',
+        clearInterval: 'readonly',
       },
     },
     plugins: {
@@ -50,20 +60,33 @@ export default [
         {
           singleQuote: true,
           trailingComma: 'all',
-          printWidth: 140,
+          printWidth: 80,
           semi: true,
         },
       ],
       'max-len': ['error', { code: 100, ignoreStrings: true }],
       'react/react-in-jsx-scope': 'off',
       'react/prop-types': 'off',
-      '@typescript-eslint/no-unused-vars': ['warn', { argsIgnorePattern: '^_' }],
+      '@typescript-eslint/no-unused-vars': [
+        'warn',
+        { argsIgnorePattern: '^_' },
+      ],
       'import/no-duplicates': ['error', { considerQueryString: true }],
-      '@typescript-eslint/consistent-type-imports': ['error', { prefer: 'type-imports', fixStyle: 'inline-type-imports' }],
+      '@typescript-eslint/consistent-type-imports': [
+        'error',
+        { prefer: 'type-imports', fixStyle: 'inline-type-imports' },
+      ],
       'import/order': [
         'error',
         {
-          groups: ['builtin', 'external', 'internal', 'parent', 'sibling', 'index'],
+          groups: [
+            'builtin',
+            'external',
+            'internal',
+            'parent',
+            'sibling',
+            'index',
+          ],
         },
       ],
       'simple-import-sort/imports': 'error',
