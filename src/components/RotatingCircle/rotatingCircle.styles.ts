@@ -1,54 +1,31 @@
 import styled from 'styled-components';
 
-import { DOT_SIZE } from './constants';
-
 const StyledCircle = styled.div`
   position: absolute;
-  width: 536px;
+  width: 530px;
   height: 530px;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
+  inset: 0;
+  margin: auto;
   border-radius: 50%;
   border: 1px solid rgba(66, 86, 122, 0.2);
 `;
 
-export const Dot = styled.div<{ $x: number; $y: number }>`
+export const Dot = styled.div<{ $x: number; $y: number; $isActive: boolean; $isHovered: boolean }>`
   position: absolute;
-  width: ${DOT_SIZE}px;
-  height: ${DOT_SIZE}px;
-  background-color: #42567a;
+  width: ${({ $isActive, $isHovered }) => ($isActive || $isHovered ? '56px' : '6px')};
+  height: ${({ $isActive, $isHovered }) => ($isActive || $isHovered ? '56px' : '6px')};
+  background-color: ${({ $isActive, $isHovered }) => ($isActive || $isHovered ? 'white' : '#42567A')};
   border-radius: 50%;
-  left: ${({ $x }) => `${$x}px`};
-  top: ${({ $y }) => `${$y}px`};
-  transform: translate(-50%, -50%);
-
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 0;
+  font-size: ${({ $isActive, $isHovered }) => ($isActive || $isHovered ? '16px' : '0px')};
+  color: ${({ $isActive, $isHovered }) => ($isActive || $isHovered ? '#42567a' : 'white')};
+  border: ${({ $isActive, $isHovered }) => ($isActive || $isHovered ? '1px solid rgba(66, 86, 122, 0.2)' : 'none')};
+  transition: all 0.3s ease-in-out;
 
-  &:hover {
-    width: 56px;
-    height: 56px;
-    font-size: 20px;
-    opacity: 1;
-    border: 1px solid rgba(66, 86, 122, 0.2);
-    transition: all 0.3s ease-in-out;
-    background-color: white;
-  }
-
-  &:hover span {
-    opacity: 1;
-    font-size: 20px;
-  }
-
-  span {
-    opacity: 0;
-    transition:
-      opacity 0.3s ease-in-out,
-      font-size 0.3s ease-in-out;
-  }
+  left: ${({ $x, $isActive, $isHovered }) => `${$x - ($isActive || $isHovered ? 28 : 3)}px`};
+  top: ${({ $y, $isActive, $isHovered }) => `${$y - ($isActive || $isHovered ? 28 : 3)}px`};
 `;
 
 export { StyledCircle };

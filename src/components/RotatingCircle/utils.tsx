@@ -1,16 +1,33 @@
-import React, { type ElementType, type ReactElement } from 'react';
+import React, { type Dispatch, type ElementType, type ReactElement, type SetStateAction } from 'react';
 
-import { ANGLE_STEP, RADIUS } from './constants';
+import { ANGLE_STEP, FIXED_ACTIVE_INDEX, RADIUS } from './constants';
 
-export const generateDots = (count: number, DotComponent: ElementType): ReactElement[] => {
+export const generateDots = (
+  count: number,
+  DotComponent: ElementType,
+  activeDot: number | null,
+  setActiveDot: Dispatch<SetStateAction<number | null>>,
+): ReactElement[] => {
   return [...new Array(count)].map((_, index) => {
-    const angle = index * ANGLE_STEP;
+    const angle = index * ANGLE_STEP - Math.PI + 2 * (Math.PI / 3); // Начало с верхней левой точки
     const x = RADIUS + RADIUS * Math.cos(angle);
     const y = RADIUS + RADIUS * Math.sin(angle);
 
+    const isFixedActive = index === FIXED_ACTIVE_INDEX;
+    const isHovered = index === activeDot;
+    const isActive = isFixedActive || isHovered;
+
     return (
-      <DotComponent key={index} $x={x} $y={y}>
-        <span>{index + 1}</span>
+      <DotComponent
+        key={index}
+        $x={x}
+        $y={y}
+        $isActive={isActive}
+        $isHovered={isHovered}
+        onMouseEnter={() => setActiveDot(index)}
+        onMouseLeave={() => setActiveDot(null)}
+      >
+        <span>{isActive && index + 1}</span>
       </DotComponent>
     );
   });

@@ -54,6 +54,7 @@ export default [
           semi: true,
         },
       ],
+      'max-len': ['error', { code: 100, ignoreStrings: true }],
       'react/react-in-jsx-scope': 'off',
       'react/prop-types': 'off',
       '@typescript-eslint/no-unused-vars': ['warn', { argsIgnorePattern: '^_' }],
