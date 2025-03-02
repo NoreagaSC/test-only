@@ -26,6 +26,7 @@ export const Dot = styled.div<{ $x: number; $y: number; $isActive: boolean; $isH
 
   left: ${({ $x, $isActive, $isHovered }) => `${$x - ($isActive || $isHovered ? 28 : 3)}px`};
   top: ${({ $y, $isActive, $isHovered }) => `${$y - ($isActive || $isHovered ? 28 : 3)}px`};
+  cursor: pointer;
 `;
 
 export { StyledCircle };
