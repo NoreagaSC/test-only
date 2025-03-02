@@ -1,7 +1,15 @@
-import React, { type FC } from 'react';
+import React, { type FC, type ReactElement } from 'react';
 
-const App: FC = () => {
-  return <h1>Test Only</h1>;
+import { Content } from './Content';
+import { GlobalStyle } from './globalStyles';
+
+const App: FC = (): ReactElement => {
+  return (
+    <>
+      <GlobalStyle />
+      <Content />
+    </>
+  );
 };
 
 export default App;
