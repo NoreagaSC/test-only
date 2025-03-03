@@ -82,8 +82,12 @@ export const Dates: FC<IProps> = ({ dateFrom, dateTo }): ReactElement => {
 
   return (
     <DateWrapper>
-      <NumberWrapper>{renderDigits(dateFrom, fromRefs, 'from')}</NumberWrapper>
-      <NumberWrapper>{renderDigits(dateTo, toRefs, 'to')}</NumberWrapper>
+      <NumberWrapper color='light_blue'>
+        {renderDigits(dateFrom, fromRefs, 'from')}
+      </NumberWrapper>
+      <NumberWrapper color='pink'>
+        {renderDigits(dateTo, toRefs, 'to')}
+      </NumberWrapper>
     </DateWrapper>
   );
 };

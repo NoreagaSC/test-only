@@ -1,5 +1,7 @@
 import styled from 'styled-components';
 
+import { COLORS } from '../../constants';
+
 const DateWrapper = styled.div`
   position: absolute;
   inset: 0;
@@ -18,13 +20,9 @@ const DateWrapper = styled.div`
   z-index: -1;
 `;
 
-const NumberWrapper = styled.div`
-  //overflow: hidden;
-  //height: 200px;
-  //display: flex;
-  //align-items: center;
-
+const NumberWrapper = styled.div<{ color: string }>`
   display: flex;
+  color: ${({ color }) => COLORS[color]};
   gap: 10px;
 `;
 
