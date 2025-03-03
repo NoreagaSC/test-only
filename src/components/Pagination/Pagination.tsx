@@ -9,8 +9,8 @@ interface IProps {
 
 export const Pagination: FC<IProps> = ({ setDateFrom, setDateTo }: IProps) => {
   const handleClick = () => {
-    setDateFrom((prev) => prev + 1);
-    setDateTo((prev) => prev + 1);
+    setDateFrom((prev) => prev + 7);
+    setDateTo((prev) => prev + 11);
   };
 
   return (

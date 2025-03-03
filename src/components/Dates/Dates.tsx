@@ -1,14 +1,9 @@
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
-import React, {
-  type FC,
-  type ReactElement,
-  useEffect,
-  useRef,
-  useState,
-} from 'react';
+import React, { type FC, type ReactElement, useRef } from 'react';
 
-import { DateWrapper, Digit, NumberWrapper } from './dates.styles';
+import { DateWrapper, NumberWrapper } from './dates.styles';
+import { renderDigits } from './utils';
 
 interface IProps {
   dateFrom: number;
@@ -16,123 +11,79 @@ interface IProps {
 }
 
 export const Dates: FC<IProps> = ({ dateFrom, dateTo }): ReactElement => {
-  const [displayedFrom, setDisplayedFrom] = useState(dateFrom);
-  const [displayedTo, setDisplayedTo] = useState(dateTo);
+  const fromRefs = useRef<HTMLDivElement[]>([]);
+  const toRefs = useRef<HTMLDivElement[]>([]);
 
-  const fromRefs = useRef<(HTMLDivElement | null)[]>([]);
-  const toRefs = useRef<(HTMLDivElement | null)[]>([]);
+  /* Запоминаем предыдущие значения, чтобы изменять только нужные цифры */
+  const currentFrom = useRef(dateFrom);
+  const currentTo = useRef(dateTo);
 
-  const getDigits = (num: number) => num.toString().split('').map(Number);
+  useGSAP(() => {
+    const startFrom = currentFrom.current;
+    const startTo = currentTo.current;
+    currentFrom.current = dateFrom;
+    currentTo.current = dateTo;
 
-  // Определяем, какие цифры должны меняться
-  const prevFrom = useRef(dateFrom);
-  const prevTo = useRef(dateTo);
+    const fromDigits = startFrom.toString().padStart(4, '0').split('');
+    const toDigits = startTo.toString().padStart(4, '0').split('');
 
-  useEffect(() => {
-    if (displayedFrom !== dateFrom || displayedTo !== dateTo) {
-      const interval = setInterval(() => {
-        setDisplayedFrom((prev) => (prev < dateFrom ? prev + 1 : prev));
-        setDisplayedTo((prev) => (prev < dateTo ? prev + 1 : prev));
-      }, 100);
+    const targetFromDigits = dateFrom.toString().padStart(4, '0').split('');
+    const targetToDigits = dateTo.toString().padStart(4, '0').split('');
 
-      return () => clearInterval(interval);
-    }
-  }, [dateFrom, dateTo, displayedFrom, displayedTo]);
+    /* Максимальное количество шагов для анимации. */
+    const maxSteps = Math.max(
+      Math.abs(dateFrom - startFrom),
+      Math.abs(dateTo - startTo),
+    );
 
-  const fromDigits = getDigits(displayedFrom);
-  const toDigits = getDigits(displayedTo);
-  const prevFromDigits = getDigits(prevFrom.current);
-  const prevToDigits = getDigits(prevTo.current);
+    const baseSpeed = 0.05;
+    const slowDownFactor = 30;
+    const duration = baseSpeed * maxSteps * (1 + slowDownFactor / maxSteps);
 
-  // Анимация смены чисел "счетчиком"
-  useGSAP(
-    () => {
-      fromRefs.current.forEach((el, index) => {
-        if (el && fromDigits[index] !== prevFromDigits[index]) {
-          gsap.fromTo(
-            el,
-            { y: '0%', opacity: 1 },
-            {
-              y: '-100%',
-              opacity: 0,
-              duration: 0.1,
-              ease: 'power1.in',
-              delay: index * 0.05,
-            },
-          );
-          gsap.fromTo(
-            el,
-            { y: '100%', opacity: 0 },
-            {
-              y: '0%',
-              opacity: 1,
-              duration: 0.1,
-              ease: 'power1.out',
-              delay: 0.1 + index * 0.05,
-            },
-          );
-        }
-      });
+    let fromObj = { value: startFrom };
+    let toObj = { value: startTo };
 
-      toRefs.current.forEach((el, index) => {
-        if (el && toDigits[index] !== prevToDigits[index]) {
-          gsap.fromTo(
-            el,
-            { y: '0%', opacity: 1 },
-            {
-              y: '-100%',
-              opacity: 0,
-              duration: 0.1,
-              ease: 'power1.in',
-              delay: index * 0.05,
-            },
-          );
-          gsap.fromTo(
-            el,
-            { y: '100%', opacity: 0 },
-            {
-              y: '0%',
-              opacity: 1,
-              duration: 0.1,
-              ease: 'power1.out',
-              delay: 0.1 + index * 0.05,
-            },
-          );
-        }
-      });
+    gsap.to(fromObj, {
+      value: dateFrom,
+      duration: duration,
+      ease: 'power2.out',
+      onUpdate: () => {
+        const currentVal = Math.round(fromObj.value)
+          .toString()
+          .padStart(4, '0')
+          .split('');
 
-      prevFrom.current = displayedFrom;
-      prevTo.current = displayedTo;
-    },
-    { dependencies: [displayedFrom, displayedTo] },
-  );
+        currentVal.forEach((digit, i) => {
+          if (fromDigits[i] !== targetFromDigits[i] && fromRefs.current[i]) {
+            fromRefs.current[i]!.innerText = digit;
+          }
+        });
+      },
+    });
+
+    gsap.to(toObj, {
+      value: dateTo,
+      duration: duration,
+      ease: 'power2.out',
+      onUpdate: () => {
+        const currentVal = Math.round(toObj.value)
+          .toString()
+          .padStart(4, '0')
+          .split('');
+
+        currentVal.forEach((digit, i) => {
+          if (toDigits[i] !== targetToDigits[i] && toRefs.current[i]) {
+            toRefs.current[i]!.innerText = digit;
+          }
+        });
+      },
+    });
+  }, [dateFrom, dateTo]);
 
   return (
     <DateWrapper>
-      <NumberWrapper>
-        {fromDigits.map((digit, i) => (
-          <Digit
-            key={`from-${i}`}
-            ref={(el) => {
-              fromRefs.current[i] = el;
-            }}
-          >
-            {digit}
-          </Digit>
-        ))}
-      </NumberWrapper>
-      <NumberWrapper>
-        {toDigits.map((digit, i) => (
-          <Digit
-            key={`to-${i}`}
-            ref={(el) => {
-              toRefs.current[i] = el;
-            }}
-          >
-            {digit}
-          </Digit>
-        ))}
-      </NumberWrapper>
+      <NumberWrapper>{renderDigits(dateFrom, fromRefs, 'from')}</NumberWrapper>
+      <NumberWrapper>{renderDigits(dateTo, toRefs, 'to')}</NumberWrapper>
     </DateWrapper>
   );
 };
