@@ -111,14 +111,24 @@ export const Dates: FC<IProps> = ({ dateFrom, dateTo }): ReactElement => {
     <DateWrapper>
       <NumberWrapper>
         {fromDigits.map((digit, i) => (
-          <Digit key={`from-${i}`} ref={(el) => (fromRefs.current[i] = el)}>
+          <Digit
+            key={`from-${i}`}
+            ref={(el) => {
+              fromRefs.current[i] = el;
+            }}
+          >
             {digit}
           </Digit>
         ))}
       </NumberWrapper>
       <NumberWrapper>
         {toDigits.map((digit, i) => (
-          <Digit key={`to-${i}`} ref={(el) => (toRefs.current[i] = el)}>
+          <Digit
+            key={`to-${i}`}
+            ref={(el) => {
+              toRefs.current[i] = el;
+            }}
+          >
             {digit}
           </Digit>
         ))}
