@@ -1,8 +1,9 @@
 import React, { type FC, type ReactElement, useState } from 'react';
 
-import { Dates } from '../Dates/Dates';
-import { Pagination } from '../Pagination/Pagination';
+import { Dates } from '../Dates';
+import { Pagination } from '../Pagination';
 import { RotatingCircle } from '../RotatingCircle';
+import { Slider } from '../Slider';
 import { Title } from '../Title';
 import { GridItem, StyledContent } from './content.styles';
 
@@ -19,6 +20,7 @@ export const Content: FC = (): ReactElement => {
       <RotatingCircle />
       <Dates dateFrom={dateFrom} dateTo={dateTo} />
       <Pagination setDateFrom={setDateFrom} setDateTo={setDateTo} />
+      <Slider />
     </StyledContent>
   );
 };

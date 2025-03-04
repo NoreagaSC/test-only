@@ -23,7 +23,13 @@ export function buildLoaders(options: BuildOptions): ModuleOptions["rules"] {
     },
   };
 
+  const cssLoader = {
+    test: /\.css$/i,
+    use: ["style-loader", "css-loader"],
+  };
+
   return [
     babelLoader,
+    cssLoader
   ];
 }
