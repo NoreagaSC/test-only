@@ -42,6 +42,8 @@ export default [
         HTMLDivElement: 'readonly',
         setInterval: 'readonly',
         clearInterval: 'readonly',
+        HTMLElement: 'readonly',
+        HTMLButtonElement: 'readonly',
       },
     },
     plugins: {

@@ -5,24 +5,12 @@ import { COLORS } from '../../constants';
 
 const StyledSwiper = styled(Swiper)`
   position: absolute;
-  border: 1px dashed red;
+  //border: 1px dashed red;
   top: 841px;
   left: 78px;
   right: 78px;
 
   height: 135px;
-    
-    //overflow: visible;
-
-  // .swiper-button-prev,
-  // .swiper-button-next {
-  //   color: ${COLORS.light_blue};
-  //   transition: color 0.3s ease;
-  //
-  //   &:hover {
-  //     color: ${COLORS.pink};
-  //   }
-  }
 `;
 
 const SlideItem = styled(SwiperSlide)`
@@ -54,28 +42,42 @@ const SlideDescription = styled.div`
   letter-spacing: 1px;
 `;
 
-const SliderContainer = styled.div`
-  border: 1px solid greenyellow;
-  overflow: hidden;
-`;
+const NavigationButton = styled.button`
+  width: 40px;
+  height: 40px;
 
-const PrevButton = styled.button`
-  position: absolute;
-  left: -20px;
+  position: relative;
+  z-index: 1;
 
-  color: ${COLORS.light_blue};
+  border-radius: 50%;
+
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+  border: none;
+  background: none;
+
   transition: color 0.3s ease;
 
-  overflow: unset;
+  cursor: pointer;
+
+  svg {
+    pointer-events: none;
+  }
+`;
+
+const PrevButton = styled(NavigationButton)`
+  left: 20px;
+  bottom: 160px;
+
+  color: ${COLORS.light_blue};
 
   &:hover {
     color: ${COLORS.pink};
   }
 `;
 
-const NextButton = styled.button`
-  position: absolute;
-  right: -20px;
+const NextButton = styled(NavigationButton)`
+  left: 660px;
+  bottom: 160px;
 
   color: ${COLORS.light_blue};
   transition: color 0.3s ease;
@@ -91,6 +93,5 @@ export {
   SlideDate,
   SlideDescription,
   SlideItem,
-  SliderContainer,
   StyledSwiper,
 };
