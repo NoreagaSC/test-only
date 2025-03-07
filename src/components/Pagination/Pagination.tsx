@@ -13,22 +13,19 @@ import {
 interface IProps {
   activePeriod: number;
   setActivePeriod: Dispatch<SetStateAction<number>>;
-  setDateFrom: Dispatch<SetStateAction<number>>;
-  setDateTo: Dispatch<SetStateAction<number>>;
+  // setDateFrom: Dispatch<SetStateAction<number>>;
+  // setDateTo: Dispatch<SetStateAction<number>>;
 }
 
 export const Pagination: FC<IProps> = ({
   activePeriod,
   setActivePeriod,
-  setDateFrom,
-  setDateTo,
+  // setDateFrom,
+  // setDateTo,
 }: IProps) => {
-  const currentPoint = activePeriod || 0;
+  const currentPoint = activePeriod + 1 || 1;
 
   const handlePrevPeriod = () => {
-    setDateFrom((prev) => prev - 7);
-    setDateTo((prev) => prev - 11);
-
     setActivePeriod((prev) => {
       if (prev - 1 < 0) {
         return prev;
@@ -39,11 +36,8 @@ export const Pagination: FC<IProps> = ({
   };
 
   const handleNextPeriod = () => {
-    setDateFrom((prev) => prev + 7);
-    setDateTo((prev) => prev + 11);
-
     setActivePeriod((prev) => {
-      if (prev + 1 > DOTS_COUNT) {
+      if (prev + 1 > DOTS_COUNT - 1) {
         return prev;
       }
 

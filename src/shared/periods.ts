@@ -1,4 +1,4 @@
-interface IPeriod {
+export interface IPeriod {
   period: string;
   events: {
     date: number;

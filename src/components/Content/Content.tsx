@@ -1,14 +1,16 @@
 import { Dates, Pagination, RotatingCircle, Slider, Title } from 'components';
 import React, { type FC, type ReactElement, useState } from 'react';
+import { parseYearRange, progressPeriods } from 'shared';
 
 import { GridItem, StyledContent } from './content.styles';
 
 export const Content: FC = (): ReactElement => {
-  const [dateFrom, setDateFrom] = useState<number>(1995);
-  const [dateTo, setDateTo] = useState<number>(2012);
-
   /** Текущий период для отображения в слайдере и пагинации. */
   const [activePeriod, setActivePeriod] = useState<number>(0);
+
+  const { startDate, endDate } = parseYearRange(
+    progressPeriods[activePeriod].period,
+  );
 
   return (
     <StyledContent>
@@ -17,14 +19,14 @@ export const Content: FC = (): ReactElement => {
         <GridItem key={index} />
       ))}
       <RotatingCircle activeDot={activePeriod} setActiveDot={setActivePeriod} />
-      <Dates dateFrom={dateFrom} dateTo={dateTo} />
+      <Dates dateFrom={startDate} dateTo={endDate} />
       <Pagination
         activePeriod={activePeriod}
         setActivePeriod={setActivePeriod}
-        setDateFrom={setDateFrom}
-        setDateTo={setDateTo}
+        // setDateFrom={setDateFrom}
+        // setDateTo={setDateTo}
       />
-      <Slider />
+      <Slider activePeriod={activePeriod} />
     </StyledContent>
   );
 };

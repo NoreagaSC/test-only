@@ -8,10 +8,10 @@ import React, {
   useEffect,
   useRef,
 } from 'react';
+import { getEventsById } from 'shared';
 import { Navigation } from 'swiper/modules';
 import { type SwiperRef, SwiperSlide } from 'swiper/react';
 
-import { slides } from '../../shared';
 import { NextArrow, PrevArrow } from '../UI';
 import {
   NextButton,
@@ -22,7 +22,13 @@ import {
   StyledSwiper,
 } from './slider.styles';
 
-export const Slider: FC = (): ReactElement => {
+interface IProps {
+  activePeriod: number;
+}
+
+export const Slider: FC<IProps> = ({ activePeriod }): ReactElement => {
+  const events = getEventsById(activePeriod);
+
   const swiperRef = useRef<SwiperRef | null>(null);
   const prevButtonRef = useRef<HTMLButtonElement | null>(null);
   const nextButtonRef = useRef<HTMLButtonElement | null>(null);
@@ -78,7 +84,7 @@ export const Slider: FC = (): ReactElement => {
           nextEl: nextButtonRef.current,
         }}
       >
-        {slides.map(({ date, description }, index) => (
+        {events.map(({ date, description }, index) => (
           <SwiperSlide key={index}>
             <SlideItem>
               <SlideDate>{date}</SlideDate>
