@@ -25,24 +25,12 @@ export const Dates: FC<IProps> = ({
 
   const [toDigits, setToDigits] = useState<string[]>(padAndSplit(dateTo));
 
-  /* Запоминаем предыдущие значения, чтобы изменять только нужные цифры */
-  // const currentFrom = useRef(dateFrom);
-  // const currentTo = useRef(dateTo);
-
   useGSAP(() => {
     const startFrom = prevFrom;
     const startTo = prevTo;
     prevFrom = dateFrom;
     prevTo = dateTo;
 
-    // /* Максимальное количество шагов для анимации. */
-    // const maxSteps = Math.max(
-    //   Math.abs(dateFrom - startFrom),
-    //   Math.abs(dateTo - startTo),
-    // );
-
-    // const baseSpeed = 0.05;
-    // const slowDownFactor = 30;
     const duration = BASE_SPEED * maxSteps * (1 + SLOWDOWN_FACTOR / maxSteps);
 
     let fromObj = { value: startFrom };
