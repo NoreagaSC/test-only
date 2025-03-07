@@ -24,12 +24,6 @@ export const Dates: FC<IProps> = ({ dateFrom, dateTo }): ReactElement => {
     currentFrom.current = dateFrom;
     currentTo.current = dateTo;
 
-    const fromDigits = startFrom.toString().padStart(4, '0').split('');
-    const toDigits = startTo.toString().padStart(4, '0').split('');
-
-    const targetFromDigits = dateFrom.toString().padStart(4, '0').split('');
-    const targetToDigits = dateTo.toString().padStart(4, '0').split('');
-
     /* Максимальное количество шагов для анимации. */
     const maxSteps = Math.max(
       Math.abs(dateFrom - startFrom),
@@ -43,6 +37,7 @@ export const Dates: FC<IProps> = ({ dateFrom, dateTo }): ReactElement => {
     let fromObj = { value: startFrom };
     let toObj = { value: startTo };
 
+    // Анимация для первого числа
     gsap.to(fromObj, {
       value: dateFrom,
       duration: duration,
@@ -54,13 +49,14 @@ export const Dates: FC<IProps> = ({ dateFrom, dateTo }): ReactElement => {
           .split('');
 
         currentVal.forEach((digit, i) => {
-          if (fromDigits[i] !== targetFromDigits[i] && fromRefs.current[i]) {
+          if (fromRefs.current[i]) {
             fromRefs.current[i]!.innerText = digit;
           }
         });
       },
     });
 
+    // Анимация для второго числа
     gsap.to(toObj, {
       value: dateTo,
       duration: duration,
@@ -72,7 +68,7 @@ export const Dates: FC<IProps> = ({ dateFrom, dateTo }): ReactElement => {
           .split('');
 
         currentVal.forEach((digit, i) => {
-          if (toDigits[i] !== targetToDigits[i] && toRefs.current[i]) {
+          if (toRefs.current[i]) {
             toRefs.current[i]!.innerText = digit;
           }
         });
