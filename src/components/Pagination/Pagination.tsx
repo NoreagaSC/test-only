@@ -13,8 +13,6 @@ import {
 interface IProps {
   activePeriod: number;
   setActivePeriod: Dispatch<SetStateAction<number>>;
-  // setDateFrom: Dispatch<SetStateAction<number>>;
-  // setDateTo: Dispatch<SetStateAction<number>>;
 }
 
 export const Pagination: FC<IProps> = ({

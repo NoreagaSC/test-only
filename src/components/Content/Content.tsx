@@ -23,8 +23,6 @@ export const Content: FC = (): ReactElement => {
       <Pagination
         activePeriod={activePeriod}
         setActivePeriod={setActivePeriod}
-        // setDateFrom={setDateFrom}
-        // setDateTo={setDateTo}
       />
       <Slider activePeriod={activePeriod} />
     </StyledContent>

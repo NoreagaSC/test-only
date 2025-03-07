@@ -10,8 +10,8 @@ import { ANGLE_STEP, FIXED_ACTIVE_INDEX, RADIUS } from './constants';
 export const generateDots = (
   count: number,
   DotComponent: ElementType,
-  hoveredDot: number,
-  setHoveredDot: Dispatch<SetStateAction<number>>,
+  hoveredDot: number | null,
+  setHoveredDot: Dispatch<SetStateAction<number | null>>,
 ): ReactElement[] => {
   return [...new Array(count)].map((_, index) => {
     const angle = index * ANGLE_STEP - Math.PI + 2 * (Math.PI / 3); // Начало с верхней левой точки

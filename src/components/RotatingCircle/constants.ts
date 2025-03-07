@@ -1,4 +1,4 @@
-import { DOTS_COUNT } from 'shared/constants';
+import { DOTS_COUNT } from 'shared';
 
 export const CIRCLE_SIZE = 530;
 export const RADIUS = CIRCLE_SIZE / 2;

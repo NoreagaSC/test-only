@@ -22,7 +22,7 @@ export const RotatingCircle: FC<IProps> = (
     // setActiveDot,
   },
 ): ReactElement => {
-  const [hoveredDot, setHoveredDot] = useState<number>(0);
+  const [hoveredDot, setHoveredDot] = useState<number | null>(0);
 
   const dots = generateDots(DOTS_COUNT, Dot, hoveredDot, setHoveredDot);
 
