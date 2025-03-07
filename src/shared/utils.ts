@@ -16,3 +16,8 @@ export const getDatePeriods = (): string[] =>
 
 export const getEventsById = (id: number) =>
   progressPeriods.map((progressPeriod) => progressPeriod.events)[id];
+
+/** Функция, разбивающая '1925' на ['1', '9', '2', '5'] */
+export const padAndSplit = (number: string | number): string[] => {
+  return number.toString().padStart(4, '0').split('');
+};

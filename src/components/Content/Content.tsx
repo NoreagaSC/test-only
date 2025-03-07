@@ -18,7 +18,10 @@ export const Content: FC = (): ReactElement => {
       {[...Array(4)].map((_, index) => (
         <GridItem key={index} />
       ))}
-      <RotatingCircle activeDot={activePeriod} setActiveDot={setActivePeriod} />
+      <RotatingCircle
+        activePeriod={activePeriod}
+        setActivePeriod={setActivePeriod}
+      />
       <Dates dateFrom={startDate} dateTo={endDate} />
       <Pagination
         activePeriod={activePeriod}

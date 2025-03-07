@@ -11,15 +11,15 @@ import { Dot, StyledCircle } from './rotatingCircle.styles';
 import { generateDots } from './utils';
 
 interface IProps {
-  activeDot: number;
-  setActiveDot: Dispatch<SetStateAction<number>>;
+  activePeriod: number;
+  setActivePeriod: Dispatch<SetStateAction<number>>;
 }
 
 export const RotatingCircle: FC<IProps> = (
   // eslint-disable-next-line no-empty-pattern
   {
-    // activeDot,
-    // setActiveDot,
+    // activePeriod,
+    // setActivePeriod
   },
 ): ReactElement => {
   const [hoveredDot, setHoveredDot] = useState<number | null>(0);

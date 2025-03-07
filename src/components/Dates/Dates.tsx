@@ -1,6 +1,7 @@
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
-import React, { type FC, type ReactElement, useRef } from 'react';
+import React, { type FC, type ReactElement, useRef, useState } from 'react';
+import { padAndSplit } from 'shared';
 
 import { DateWrapper, NumberWrapper } from './dates.styles';
 import { renderDigits } from './utils';
@@ -11,8 +12,9 @@ interface IProps {
 }
 
 export const Dates: FC<IProps> = ({ dateFrom, dateTo }): ReactElement => {
-  const fromRefs = useRef<HTMLDivElement[]>([]);
-  const toRefs = useRef<HTMLDivElement[]>([]);
+  const [fromDigits, setFromDigits] = useState<string[]>(padAndSplit(dateFrom));
+
+  const [toDigits, setToDigits] = useState<string[]>(padAndSplit(dateTo));
 
   /* Запоминаем предыдущие значения, чтобы изменять только нужные цифры */
   const currentFrom = useRef(dateFrom);
@@ -43,16 +45,9 @@ export const Dates: FC<IProps> = ({ dateFrom, dateTo }): ReactElement => {
       duration: duration,
       ease: 'power2.out',
       onUpdate: () => {
-        const currentVal = Math.round(fromObj.value)
-          .toString()
-          .padStart(4, '0')
-          .split('');
+        const currentVal = padAndSplit(Math.round(fromObj.value));
 
-        currentVal.forEach((digit, i) => {
-          if (fromRefs.current[i]) {
-            fromRefs.current[i]!.innerText = digit;
-          }
-        });
+        setFromDigits(currentVal);
       },
     });
 
@@ -62,16 +57,9 @@ export const Dates: FC<IProps> = ({ dateFrom, dateTo }): ReactElement => {
       duration: duration,
       ease: 'power2.out',
       onUpdate: () => {
-        const currentVal = Math.round(toObj.value)
-          .toString()
-          .padStart(4, '0')
-          .split('');
+        const currentVal = padAndSplit(Math.round(toObj.value));
 
-        currentVal.forEach((digit, i) => {
-          if (toRefs.current[i]) {
-            toRefs.current[i]!.innerText = digit;
-          }
-        });
+        setToDigits(currentVal);
       },
     });
   }, [dateFrom, dateTo]);
@@ -79,11 +67,9 @@ export const Dates: FC<IProps> = ({ dateFrom, dateTo }): ReactElement => {
   return (
     <DateWrapper>
       <NumberWrapper color='light_blue'>
-        {renderDigits(dateFrom, fromRefs, 'from')}
+        {renderDigits(fromDigits, 'from')}
       </NumberWrapper>
-      <NumberWrapper color='pink'>
-        {renderDigits(dateTo, toRefs, 'to')}
-      </NumberWrapper>
+      <NumberWrapper color='pink'>{renderDigits(toDigits, 'to')}</NumberWrapper>
     </DateWrapper>
   );
 };
