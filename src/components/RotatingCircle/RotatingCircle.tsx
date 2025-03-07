@@ -9,7 +9,7 @@ import React, {
   useRef,
   useState,
 } from 'react';
-import { DOTS_COUNT } from 'shared';
+import { BASE_SPEED, DOTS_COUNT, SLOWDOWN_FACTOR } from 'shared';
 
 import { Dot, StyledCircle } from './rotatingCircle.styles';
 import { generateDots } from './utils';
@@ -25,14 +25,15 @@ export const RotatingCircle: FC<IProps> = ({
   // setActivePeriod,
   maxSteps,
 }): ReactElement => {
-  const [hoveredDot, setHoveredDot] = useState<number | null>(0);
-  const prevActivePeriod = useRef<number>(activePeriod);
-
-  const dots = generateDots(DOTS_COUNT, Dot, hoveredDot, setHoveredDot);
-
+  /** Ссылка на вращающийся круг. */
   const circleRef = useRef<HTMLDivElement>(null);
 
-  console.log(maxSteps);
+  const duration = BASE_SPEED * maxSteps * (1 + SLOWDOWN_FACTOR / maxSteps);
+
+  /** Состояние для точки, на которую наведён курсор. */
+  const [hoveredDot, setHoveredDot] = useState<number | null>(0);
+  const dots = generateDots(DOTS_COUNT, Dot, hoveredDot, setHoveredDot);
+  const prevActivePeriod = useRef<number>(activePeriod);
 
   useGSAP(() => {
     if (prevActivePeriod.current !== activePeriod) {
@@ -42,7 +43,7 @@ export const RotatingCircle: FC<IProps> = ({
 
       gsap.to(circleRef.current, {
         rotation: `+=${rotationAngle * direction}`,
-        duration: 2,
+        duration,
         ease: 'power2.out',
         transformOrigin: 'center',
       });
