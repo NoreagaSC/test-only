@@ -15,7 +15,8 @@
       "components": ["src/components/index"],
       "components/*": ["src/components/*"],
       "shared": ["src/shared"],
-      "assets": ["src/assets/*"]
+      "assets": ["src/assets/*"],
+      "hooks": ["src/hooks/index"]
     }
   },
   "ts-node": {

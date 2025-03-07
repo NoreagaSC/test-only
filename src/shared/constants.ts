@@ -4,3 +4,7 @@ export const COLORS: Record<string, string> = {
 };
 
 export const DOTS_COUNT = 6;
+
+/** Константы для анимации. */
+export const BASE_SPEED = 0.05;
+export const SLOWDOWN_FACTOR = 30;

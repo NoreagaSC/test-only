@@ -1,4 +1,5 @@
 import { Dates, Pagination, RotatingCircle, Slider, Title } from 'components';
+import { usePrevious } from 'hooks';
 import React, { type FC, type ReactElement, useState } from 'react';
 import { parseYearRange, progressPeriods } from 'shared';
 
@@ -12,6 +13,16 @@ export const Content: FC = (): ReactElement => {
     progressPeriods[activePeriod].period,
   );
 
+  /** Сохраненные предыдущие значения */
+  const prevFrom = usePrevious(startDate);
+  const prevTo = usePrevious(endDate);
+
+  /* Максимальное количество шагов для анимации. */
+  const maxSteps = Math.max(
+    Math.abs(startDate - prevFrom),
+    Math.abs(endDate - prevTo),
+  );
+
   return (
     <StyledContent>
       <Title />
@@ -21,8 +32,15 @@ export const Content: FC = (): ReactElement => {
       <RotatingCircle
         activePeriod={activePeriod}
         setActivePeriod={setActivePeriod}
+        maxSteps={maxSteps}
       />
-      <Dates dateFrom={startDate} dateTo={endDate} />
+      <Dates
+        dateFrom={startDate}
+        dateTo={endDate}
+        prevFrom={prevFrom}
+        prevTo={prevTo}
+        maxSteps={maxSteps}
+      />
       <Pagination
         activePeriod={activePeriod}
         setActivePeriod={setActivePeriod}

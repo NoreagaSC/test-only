@@ -12,6 +12,7 @@ export function buildResolvers(
       'components': path.resolve(__dirname, '../../src/components'),
       'shared': path.resolve(__dirname, '../../src/shared'),
       'assets': path.resolve(__dirname, '../../src/assets'),
+      'hooks': path.resolve(__dirname, '../../src/hooks'),
     }
   };
 }

@@ -1,7 +1,7 @@
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
-import React, { type FC, type ReactElement, useRef, useState } from 'react';
-import { padAndSplit } from 'shared';
+import React, { type FC, type ReactElement, useState } from 'react';
+import { BASE_SPEED, padAndSplit, SLOWDOWN_FACTOR } from 'shared';
 
 import { DateWrapper, NumberWrapper } from './dates.styles';
 import { renderDigits } from './utils';
@@ -9,32 +9,41 @@ import { renderDigits } from './utils';
 interface IProps {
   dateFrom: number;
   dateTo: number;
+  prevFrom: number;
+  prevTo: number;
+  maxSteps: number;
 }
 
-export const Dates: FC<IProps> = ({ dateFrom, dateTo }): ReactElement => {
+export const Dates: FC<IProps> = ({
+  dateFrom,
+  dateTo,
+  prevFrom,
+  prevTo,
+  maxSteps,
+}): ReactElement => {
   const [fromDigits, setFromDigits] = useState<string[]>(padAndSplit(dateFrom));
 
   const [toDigits, setToDigits] = useState<string[]>(padAndSplit(dateTo));
 
   /* Запоминаем предыдущие значения, чтобы изменять только нужные цифры */
-  const currentFrom = useRef(dateFrom);
-  const currentTo = useRef(dateTo);
+  // const currentFrom = useRef(dateFrom);
+  // const currentTo = useRef(dateTo);
 
   useGSAP(() => {
-    const startFrom = currentFrom.current;
-    const startTo = currentTo.current;
-    currentFrom.current = dateFrom;
-    currentTo.current = dateTo;
+    const startFrom = prevFrom;
+    const startTo = prevTo;
+    prevFrom = dateFrom;
+    prevTo = dateTo;
 
-    /* Максимальное количество шагов для анимации. */
-    const maxSteps = Math.max(
-      Math.abs(dateFrom - startFrom),
-      Math.abs(dateTo - startTo),
-    );
+    // /* Максимальное количество шагов для анимации. */
+    // const maxSteps = Math.max(
+    //   Math.abs(dateFrom - startFrom),
+    //   Math.abs(dateTo - startTo),
+    // );
 
-    const baseSpeed = 0.05;
-    const slowDownFactor = 30;
-    const duration = baseSpeed * maxSteps * (1 + slowDownFactor / maxSteps);
+    // const baseSpeed = 0.05;
+    // const slowDownFactor = 30;
+    const duration = BASE_SPEED * maxSteps * (1 + SLOWDOWN_FACTOR / maxSteps);
 
     let fromObj = { value: startFrom };
     let toObj = { value: startTo };
