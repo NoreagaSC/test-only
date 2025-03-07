@@ -9,6 +9,11 @@ export const Content: FC = (): ReactElement => {
   /** Текущий период для отображения в слайдере и пагинации. */
   const [activePeriod, setActivePeriod] = useState<number>(0);
 
+  /** Флаг активной анимации. */
+  const [isAnimating, setIsAnimating] = useState<boolean>(false);
+
+  console.log(activePeriod);
+
   const { startDate, endDate } = parseYearRange(
     progressPeriods[activePeriod].period,
   );
@@ -32,6 +37,8 @@ export const Content: FC = (): ReactElement => {
       <RotatingCircle
         activePeriod={activePeriod}
         setActivePeriod={setActivePeriod}
+        isAnimating={isAnimating}
+        setIsAnimating={setIsAnimating}
         maxSteps={maxSteps}
       />
       <Dates
@@ -44,8 +51,13 @@ export const Content: FC = (): ReactElement => {
       <Pagination
         activePeriod={activePeriod}
         setActivePeriod={setActivePeriod}
+        isAnimating={isAnimating}
       />
-      <Slider activePeriod={activePeriod} />
+      <Slider
+        activePeriod={activePeriod}
+        isAnimating={isAnimating}
+        setIsAnimating={setIsAnimating}
+      />
     </StyledContent>
   );
 };

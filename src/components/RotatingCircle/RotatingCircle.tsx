@@ -9,21 +9,25 @@ import React, {
   useRef,
   useState,
 } from 'react';
-import { BASE_SPEED, DOTS_COUNT, SLOWDOWN_FACTOR } from 'shared';
+import { BASE_SPEED, SLOWDOWN_FACTOR } from 'shared';
 
-import { Dot, StyledCircle } from './rotatingCircle.styles';
+import { StyledCircle } from './rotatingCircle.styles';
 import { generateDots } from './utils';
 
 interface IProps {
   activePeriod: number;
-  setActivePeriod?: Dispatch<SetStateAction<number>>;
+  setActivePeriod: Dispatch<SetStateAction<number>>;
+  isAnimating: boolean;
+  setIsAnimating: Dispatch<SetStateAction<boolean>>;
   maxSteps: number;
 }
 
 export const RotatingCircle: FC<IProps> = ({
   activePeriod,
-  // setActivePeriod,
+  setActivePeriod,
   maxSteps,
+  isAnimating,
+  setIsAnimating,
 }): ReactElement => {
   /** Ссылка на вращающийся круг. */
   const circleRef = useRef<HTMLDivElement>(null);
@@ -32,20 +36,39 @@ export const RotatingCircle: FC<IProps> = ({
 
   /** Состояние для точки, на которую наведён курсор. */
   const [hoveredDot, setHoveredDot] = useState<number | null>(0);
-  const dots = generateDots(DOTS_COUNT, Dot, hoveredDot, setHoveredDot);
+
   const prevActivePeriod = useRef<number>(activePeriod);
+
+  const delta = activePeriod - prevActivePeriod.current;
+  const direction = delta > 0 ? 1 : -1;
+  const absoluteAngle = Math.abs(delta) * BASE_ROTATION_STEP;
+  const rotationAngle = absoluteAngle * direction;
+
+  const [compensatingAngle, setCompensatingAngle] =
+    useState<number>(rotationAngle);
+
+  /** Функция для генерации кнопок. */
+  const dots = generateDots(
+    hoveredDot,
+    isAnimating,
+    setHoveredDot,
+    setActivePeriod,
+    compensatingAngle,
+  );
 
   useGSAP(() => {
     if (prevActivePeriod.current !== activePeriod) {
-      const delta = activePeriod - prevActivePeriod.current;
-      const direction = delta > 0 ? 1 : -1;
-      const rotationAngle = Math.abs(delta) * BASE_ROTATION_STEP;
+      setIsAnimating(true);
+      setCompensatingAngle((prev) => Math.abs(prev + rotationAngle));
 
       gsap.to(circleRef.current, {
-        rotation: `+=${rotationAngle * direction}`,
+        rotation: `+=${rotationAngle}`,
         duration,
         ease: 'power2.out',
         transformOrigin: 'center',
+        onComplete: () => {
+          setIsAnimating(false);
+        },
       });
 
       prevActivePeriod.current = activePeriod;

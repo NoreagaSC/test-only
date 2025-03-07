@@ -10,11 +10,12 @@ const StyledCircle = styled.div`
   border: 1px solid rgba(66, 86, 122, 0.2);
 `;
 
-export const Dot = styled.div<{
+const Dot = styled.div<{
   $x: number;
   $y: number;
   $isActive: boolean;
   $isHovered: boolean;
+  $compensatingAngle: number;
 }>`
   position: absolute;
   width: ${({ $isActive, $isHovered }) =>
@@ -24,9 +25,11 @@ export const Dot = styled.div<{
   background-color: ${({ $isActive, $isHovered }) =>
     $isActive || $isHovered ? 'white' : '#42567A'};
   border-radius: 50%;
+
   display: flex;
   align-items: center;
   justify-content: center;
+
   font-size: ${({ $isActive, $isHovered }) =>
     $isActive || $isHovered ? '16px' : '0px'};
   color: ${({ $isActive, $isHovered }) =>
@@ -42,4 +45,12 @@ export const Dot = styled.div<{
   cursor: pointer;
 `;
 
-export { StyledCircle };
+const DotTextWrapper = styled.span<{
+  $compensatingAngle: number;
+}>`
+  //
+  transform: rotate(${({ $compensatingAngle }) => -$compensatingAngle}deg);
+  transition: transform 0.3s ease-in-out;
+`;
+
+export { Dot, DotTextWrapper, StyledCircle };

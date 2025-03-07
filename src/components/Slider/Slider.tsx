@@ -2,8 +2,10 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 
 import React, {
+  type Dispatch,
   type FC,
   type ReactElement,
+  type SetStateAction,
   useCallback,
   useEffect,
   useRef,
@@ -24,9 +26,14 @@ import {
 
 interface IProps {
   activePeriod: number;
+  isAnimating: boolean;
+  setIsAnimating: Dispatch<SetStateAction<boolean>>;
 }
 
-export const Slider: FC<IProps> = ({ activePeriod }): ReactElement => {
+export const Slider: FC<IProps> = ({
+  activePeriod,
+  isAnimating,
+}): ReactElement => {
   const events = getEventsById(activePeriod);
 
   const swiperRef = useRef<SwiperRef | null>(null);
@@ -64,7 +71,7 @@ export const Slider: FC<IProps> = ({ activePeriod }): ReactElement => {
     };
   }, [updateNavigationButtons]);
 
-  return (
+  return !isAnimating ? (
     <>
       <StyledSwiper
         ref={swiperRef}
@@ -100,5 +107,7 @@ export const Slider: FC<IProps> = ({ activePeriod }): ReactElement => {
         <NextArrow />
       </NextButton>
     </>
+  ) : (
+    <>Animation is progress</>
   );
 };
