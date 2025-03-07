@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "baseUrl": ".",
     "outDir": "./dist",
     "module": "ESNext",
     "target": "ES6",
@@ -9,7 +10,13 @@
     "resolveJsonModule": true,
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "paths": {
+      "components": ["src/components/index"],
+      "components/*": ["src/components/*"],
+      "shared": ["src/shared"],
+      "assets": ["src/assets/*"]
+    }
   },
   "ts-node": {
     "compilerOptions": {

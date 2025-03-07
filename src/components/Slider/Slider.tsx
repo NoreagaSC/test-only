@@ -11,7 +11,7 @@ import React, {
 import { Navigation } from 'swiper/modules';
 import { type SwiperRef, SwiperSlide } from 'swiper/react';
 
-import { slides } from '../../constants';
+import { slides } from '../../shared';
 import { NextArrow, PrevArrow } from '../UI';
 import {
   NextButton,

@@ -3,22 +3,28 @@ import React, {
   type FC,
   type ReactElement,
   type SetStateAction,
+  useState,
 } from 'react';
+import { DOTS_COUNT } from 'shared';
 
-import { DOTS_COUNT } from './constants';
 import { Dot, StyledCircle } from './rotatingCircle.styles';
 import { generateDots } from './utils';
 
 interface IProps {
-  activeDot: number | null;
-  setActiveDot: Dispatch<SetStateAction<number | null>>;
+  activeDot: number;
+  setActiveDot: Dispatch<SetStateAction<number>>;
 }
 
-export const RotatingCircle: FC<IProps> = ({
-  activeDot,
-  setActiveDot,
-}): ReactElement => {
-  const dots = generateDots(DOTS_COUNT, Dot, activeDot, setActiveDot);
+export const RotatingCircle: FC<IProps> = (
+  // eslint-disable-next-line no-empty-pattern
+  {
+    // activeDot,
+    // setActiveDot,
+  },
+): ReactElement => {
+  const [hoveredDot, setHoveredDot] = useState<number>(0);
+
+  const dots = generateDots(DOTS_COUNT, Dot, hoveredDot, setHoveredDot);
 
   return <StyledCircle>{dots}</StyledCircle>;
 };

@@ -3,6 +3,8 @@ export const COLORS: Record<string, string> = {
   pink: '#ef5da8',
 };
 
+export const DOTS_COUNT = 6;
+
 export const slides: { date: string; description: string }[] = [
   {
     date: '1995',

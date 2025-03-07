@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
-import { COLORS } from '../../constants';
+import { COLORS } from '../../shared';
 
 const StyledSwiper = styled(Swiper)`
   position: absolute;

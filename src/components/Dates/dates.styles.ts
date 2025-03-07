@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import { COLORS } from '../../constants';
+import { COLORS } from '../../shared';
 
 const DateWrapper = styled.div`
   position: absolute;
