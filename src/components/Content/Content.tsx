@@ -55,18 +55,16 @@ export const Content: FC = (): ReactElement => {
         prevTo={prevTo}
         maxSteps={maxSteps}
       />
-      {!isMobile && (
-        <Pagination
-          activePeriod={activePeriod}
-          setActivePeriod={setActivePeriod}
-          isAnimating={isAnimating}
-          setHoveredDot={setHoveredDot}
-        />
-      )}
       <Slider
         activePeriod={activePeriod}
         isAnimating={isAnimating}
         setIsAnimating={setIsAnimating}
+      />
+      <Pagination
+        activePeriod={activePeriod}
+        setActivePeriod={setActivePeriod}
+        isAnimating={isAnimating}
+        setHoveredDot={setHoveredDot}
       />
     </StyledContent>
   );
