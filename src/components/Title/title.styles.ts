@@ -21,14 +21,13 @@ const StyledTitleLayout = styled.div`
     border-image: linear-gradient(180deg, #3877ee, #ef5da8) 1;
   }
 
-  // ${MEDIA.mobile} {
-  //   position: relative;
-  //   top: 59px;
-  //   left: 20px;
-  //
-  //   font-size: 20px;
-  //   max-width: 123px;
-  // }
+  ${MEDIA.mobile} {
+    margin: 59px 0 0 20px;
+
+    line-height: 120%;
+    font-size: 20px;
+    max-width: 123px;
+  }
 `;
 
 export { StyledTitleLayout };

@@ -15,8 +15,8 @@ const StyledContent = styled.div`
   }
 
   ${MEDIA.mobile} {
-    width: auto;
-    height: auto;
+    display: flex;
+    flex-direction: column;
   }
 `;
 
