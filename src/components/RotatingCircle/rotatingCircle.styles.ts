@@ -13,15 +13,17 @@ const StyledCircle = styled.div`
 const Dot = styled.div<{
   $x: number;
   $y: number;
+  $isAnimating: boolean;
   $isActive: boolean;
   $isHovered: boolean;
   $compensatingAngle: number;
 }>`
   position: absolute;
-  width: ${({ $isActive, $isHovered }) =>
-    $isActive || $isHovered ? '56px' : '6px'};
-  height: ${({ $isActive, $isHovered }) =>
-    $isActive || $isHovered ? '56px' : '6px'};
+  width: ${({ $isActive, $isHovered, $isAnimating }) =>
+    ($isActive && !$isAnimating) || $isHovered ? '56px' : '6px'};
+  height: ${({ $isActive, $isHovered, $isAnimating }) =>
+    ($isActive && !$isAnimating) || $isHovered ? '56px' : '6px'};
+
   background-color: ${({ $isActive, $isHovered }) =>
     $isActive || $isHovered ? 'white' : '#42567A'};
   border-radius: 50%;
@@ -30,18 +32,18 @@ const Dot = styled.div<{
   align-items: center;
   justify-content: center;
 
-  font-size: ${({ $isActive, $isHovered }) =>
-    $isActive || $isHovered ? '16px' : '0px'};
+  font-size: ${({ $isActive, $isHovered, $isAnimating }) =>
+    ($isActive && !$isAnimating) || $isHovered ? '16px' : '0px'};
   color: ${({ $isActive, $isHovered }) =>
     $isActive || $isHovered ? '#42567a' : 'white'};
   border: ${({ $isActive, $isHovered }) =>
     $isActive || $isHovered ? '1px solid rgba(66, 86, 122, 0.2)' : 'none'};
   transition: all 0.3s ease-in-out;
 
-  left: ${({ $x, $isActive, $isHovered }) =>
-    `${$x - ($isActive || $isHovered ? 28 : 3)}px`};
-  top: ${({ $y, $isActive, $isHovered }) =>
-    `${$y - ($isActive || $isHovered ? 28 : 3)}px`};
+  left: ${({ $x, $isActive, $isHovered, $isAnimating }) =>
+    `${$x - (($isActive && !$isAnimating) || $isHovered ? 28 : 3)}px`};
+  top: ${({ $y, $isActive, $isHovered, $isAnimating }) =>
+    `${$y - (($isActive && !$isAnimating) || $isHovered ? 28 : 3)}px`};
   cursor: pointer;
 `;
 

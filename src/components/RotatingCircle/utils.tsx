@@ -9,23 +9,23 @@ import React, {
 } from 'react';
 import { DOTS_COUNT } from 'shared';
 
-import { ANGLE_STEP, FIXED_ACTIVE_INDEX, RADIUS } from './constants';
+import { ANGLE_STEP, RADIUS } from './constants';
 
 export const generateDots = (
-  // count: number,
-  // DotComponent: ElementType,
   hoveredDot: number | null,
   isAnimating: boolean,
   setHoveredDot: Dispatch<SetStateAction<number | null>>,
   setActivePeriod: Dispatch<SetStateAction<number>>,
   compensatingAngle: number,
+  activePeriod: number,
 ): ReactElement[] => {
   return [...new Array(DOTS_COUNT)].map((_, index) => {
     const angle = index * ANGLE_STEP - Math.PI + 2 * (Math.PI / 3); // Начало с верхней левой точки
     const x = RADIUS + RADIUS * Math.cos(angle);
     const y = RADIUS + RADIUS * Math.sin(angle);
 
-    const isFixedActive = index === FIXED_ACTIVE_INDEX;
+    const isFixedActive = index === activePeriod % DOTS_COUNT;
+
     const isHovered = index === hoveredDot;
     const isActive = isFixedActive || isHovered;
 
@@ -39,7 +39,6 @@ export const generateDots = (
 
     const handleClick = () => {
       if (!isAnimating) {
-        // setActivePeriod((prev) => prev + Math.abs(prev - index));
         setActivePeriod(index);
       }
     };
@@ -51,6 +50,7 @@ export const generateDots = (
         $y={y}
         $isActive={isActive}
         $isHovered={isHovered}
+        $isAnimating={isAnimating}
         $compensatingAngle={compensatingAngle}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}

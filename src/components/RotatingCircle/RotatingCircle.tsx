@@ -9,7 +9,7 @@ import React, {
   useRef,
   useState,
 } from 'react';
-import { BASE_SPEED, SLOWDOWN_FACTOR } from 'shared';
+import { BASE_SPEED, DOTS_COUNT, SLOWDOWN_FACTOR } from 'shared';
 
 import { StyledCircle } from './rotatingCircle.styles';
 import { generateDots } from './utils';
@@ -31,21 +31,14 @@ export const RotatingCircle: FC<IProps> = ({
 }): ReactElement => {
   /** Ссылка на вращающийся круг. */
   const circleRef = useRef<HTMLDivElement>(null);
+  const prevActivePeriod = useRef<number>(activePeriod);
 
   const duration = BASE_SPEED * maxSteps * (1 + SLOWDOWN_FACTOR / maxSteps);
 
   /** Состояние для точки, на которую наведён курсор. */
   const [hoveredDot, setHoveredDot] = useState<number | null>(0);
 
-  const prevActivePeriod = useRef<number>(activePeriod);
-
-  const delta = activePeriod - prevActivePeriod.current;
-  const direction = delta > 0 ? 1 : -1;
-  const absoluteAngle = Math.abs(delta) * BASE_ROTATION_STEP;
-  const rotationAngle = absoluteAngle * direction;
-
-  const [compensatingAngle, setCompensatingAngle] =
-    useState<number>(rotationAngle);
+  const [compensatingAngle, setCompensatingAngle] = useState<number>(0);
 
   /** Функция для генерации кнопок. */
   const dots = generateDots(
@@ -54,12 +47,23 @@ export const RotatingCircle: FC<IProps> = ({
     setHoveredDot,
     setActivePeriod,
     compensatingAngle,
+    activePeriod,
   );
 
   useGSAP(() => {
     if (prevActivePeriod.current !== activePeriod) {
       setIsAnimating(true);
-      setCompensatingAngle((prev) => Math.abs(prev + rotationAngle));
+
+      let delta =
+        (activePeriod - prevActivePeriod.current + DOTS_COUNT) % DOTS_COUNT;
+
+      if (delta > DOTS_COUNT / 2) {
+        delta -= DOTS_COUNT;
+      }
+
+      let rotationAngle = -delta * BASE_ROTATION_STEP;
+
+      setCompensatingAngle((prev) => (prev + rotationAngle) % 360);
 
       gsap.to(circleRef.current, {
         rotation: `+=${rotationAngle}`,
@@ -68,6 +72,8 @@ export const RotatingCircle: FC<IProps> = ({
         transformOrigin: 'center',
         onComplete: () => {
           setIsAnimating(false);
+
+          console.log('анимация завершена');
         },
       });
 

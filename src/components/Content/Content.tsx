@@ -12,8 +12,6 @@ export const Content: FC = (): ReactElement => {
   /** Флаг активной анимации. */
   const [isAnimating, setIsAnimating] = useState<boolean>(false);
 
-  console.log(activePeriod);
-
   const { startDate, endDate } = parseYearRange(
     progressPeriods[activePeriod].period,
   );
