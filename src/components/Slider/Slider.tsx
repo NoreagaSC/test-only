@@ -6,7 +6,6 @@ import React, {
   type FC,
   type ReactElement,
   type SetStateAction,
-  useCallback,
   useEffect,
   useRef,
 } from 'react';
@@ -21,6 +20,7 @@ import {
   SlideDate,
   SlideDescription,
   SlideItem,
+  SliderWrapper,
   StyledSwiper,
 } from './slider.styles';
 
@@ -42,7 +42,7 @@ export const Slider: FC<IProps> = ({
 
   const swiperInstance = swiperRef.current?.swiper;
 
-  const updateNavigationButtons = useCallback(() => {
+  const updateNavigationButtons = () => {
     if (!swiperInstance) return;
 
     if (prevButtonRef.current && nextButtonRef.current) {
@@ -58,7 +58,7 @@ export const Slider: FC<IProps> = ({
         ? 'none'
         : 'auto';
     }
-  }, []);
+  };
 
   useEffect(() => {
     if (!swiperInstance) return;
@@ -71,12 +71,20 @@ export const Slider: FC<IProps> = ({
     };
   }, [updateNavigationButtons]);
 
-  return !isAnimating ? (
-    <>
+  useEffect(() => {
+    /** При смене активного периода скинуть до первого слайда. */
+    if (swiperInstance) {
+      swiperInstance.slideTo(0, 0);
+    }
+  }, [activePeriod]);
+
+  return (
+    <SliderWrapper $isAnimating={isAnimating}>
       <StyledSwiper
         ref={swiperRef}
         modules={[Navigation]}
         spaceBetween={80}
+        $isAnimating={isAnimating}
         // slidesPerView='auto'
         breakpoints={{
           768: {
@@ -106,8 +114,6 @@ export const Slider: FC<IProps> = ({
       <NextButton ref={nextButtonRef}>
         <NextArrow />
       </NextButton>
-    </>
-  ) : (
-    <>Animation is progress</>
+    </SliderWrapper>
   );
 };

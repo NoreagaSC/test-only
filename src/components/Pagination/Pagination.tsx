@@ -19,8 +19,6 @@ interface IProps {
 export const Pagination: FC<IProps> = ({
   activePeriod,
   setActivePeriod,
-  // setDateFrom,
-  // setDateTo,
   isAnimating,
 }: IProps) => {
   const currentPoint = activePeriod + 1 || 1;

@@ -1,14 +1,19 @@
 import styled from 'styled-components';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
-import { COLORS } from '../../shared';
-
-const StyledSwiper = styled(Swiper)`
+const SliderWrapper = styled.div<{ $isAnimating: boolean }>`
   position: absolute;
-  //border: 1px dashed red;
+  height: 135px;
+
   top: 841px;
   left: 78px;
   right: 78px;
+
+  opacity: ${({ $isAnimating }) => ($isAnimating ? 0 : 1)};
+`;
+
+const StyledSwiper = styled(Swiper)<{ $isAnimating: boolean }>`
+  position: relative;
 
   height: 135px;
 `;
@@ -16,6 +21,7 @@ const StyledSwiper = styled(Swiper)`
 const SlideItem = styled(SwiperSlide)`
   min-width: 320px;
   max-width: 400px;
+  overflow: hidden;
 
   text-align: left;
 `;
@@ -48,6 +54,7 @@ const NavigationButton = styled.button`
 
   position: relative;
   z-index: 1;
+  bottom: 90px;
 
   border-radius: 50%;
 
@@ -65,26 +72,12 @@ const NavigationButton = styled.button`
 `;
 
 const PrevButton = styled(NavigationButton)`
-  left: 20px;
-  bottom: 160px;
-
-  color: ${COLORS.light_blue};
-
-  &:hover {
-    color: ${COLORS.pink};
-  }
+  right: 60px;
+  opacity: 0;
 `;
 
 const NextButton = styled(NavigationButton)`
-  left: 660px;
-  bottom: 160px;
-
-  color: ${COLORS.light_blue};
-  transition: color 0.3s ease;
-
-  &:hover {
-    color: ${COLORS.pink};
-  }
+  left: 1260px;
 `;
 
 export {
@@ -93,5 +86,6 @@ export {
   SlideDate,
   SlideDescription,
   SlideItem,
+  SliderWrapper,
   StyledSwiper,
 };
