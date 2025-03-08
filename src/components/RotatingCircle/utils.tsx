@@ -1,15 +1,19 @@
 import {
   Dot,
+  DotIndex,
   DotTextWrapper,
+  DotTitle,
 } from 'components/RotatingCircle/rotatingCircle.styles';
 import React, {
   type Dispatch,
   type ReactElement,
   type SetStateAction,
 } from 'react';
-import { DOTS_COUNT } from 'shared';
+import { DOTS_COUNT, progressPeriods } from 'shared';
 
 import { ANGLE_STEP, RADIUS } from './constants';
+
+const titles = progressPeriods.map(({ title }) => title);
 
 export const generateDots = (
   hoveredDot: number | null,
@@ -18,6 +22,8 @@ export const generateDots = (
   setActivePeriod: Dispatch<SetStateAction<number>>,
   compensatingAngle: number,
   activePeriod: number,
+  shouldTitleShow: boolean,
+  setShouldTitleShow: Dispatch<SetStateAction<boolean>>,
 ): ReactElement[] => {
   return [...new Array(DOTS_COUNT)].map((_, index) => {
     const angle = index * ANGLE_STEP - Math.PI + 2 * (Math.PI / 3); // Начало с верхней левой точки
@@ -39,6 +45,7 @@ export const generateDots = (
 
     const handleClick = () => {
       if (!isAnimating) {
+        setShouldTitleShow(false);
         setActivePeriod(index);
         setHoveredDot(null);
       }
@@ -58,7 +65,12 @@ export const generateDots = (
         onClick={handleClick}
       >
         <DotTextWrapper $compensatingAngle={compensatingAngle}>
-          <span>{isActive && index + 1}</span>
+          <DotIndex>{isActive && index + 1}</DotIndex>
+          {isFixedActive && shouldTitleShow && (
+            <DotTitle $isActive={isActive} $isAnimating={isAnimating}>
+              {titles[index]}
+            </DotTitle>
+          )}
         </DotTextWrapper>
       </Dot>
     );

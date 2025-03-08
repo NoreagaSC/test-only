@@ -41,6 +41,8 @@ export const RotatingCircle: FC<IProps> = ({
 
   const [compensatingAngle, setCompensatingAngle] = useState<number>(0);
 
+  const [shouldTitleShow, setShouldTitleShow] = useState<boolean>(true);
+
   /** Функция для генерации кнопок. */
   const dots = generateDots(
     hoveredDot,
@@ -49,6 +51,8 @@ export const RotatingCircle: FC<IProps> = ({
     setActivePeriod,
     compensatingAngle,
     activePeriod,
+    shouldTitleShow,
+    setShouldTitleShow,
   );
 
   useGSAP(() => {
@@ -73,6 +77,7 @@ export const RotatingCircle: FC<IProps> = ({
         transformOrigin: 'center',
         onComplete: () => {
           setIsAnimating(false);
+          setShouldTitleShow(true);
         },
       });
 

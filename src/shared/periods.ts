@@ -1,5 +1,6 @@
 export interface IPeriod {
   period: string;
+  title: string;
   events: {
     date: number;
     description: string;
@@ -9,6 +10,7 @@ export interface IPeriod {
 export const progressPeriods: IPeriod[] = [
   {
     period: '1975 - 1985',
+    title: 'Рождение ПК',
     events: [
       {
         date: 1975,
@@ -36,6 +38,7 @@ export const progressPeriods: IPeriod[] = [
   },
   {
     period: '1985 - 1997',
+    title: 'Интернет и ОС',
     events: [
       { date: 1985, description: 'Появление Windows 1.0.' },
       {
@@ -58,6 +61,7 @@ export const progressPeriods: IPeriod[] = [
   },
   {
     period: '1997 - 2009',
+    title: 'Мобильная революция',
     events: [
       { date: 1997, description: 'Запуск первого iMac от Apple.' },
       {
@@ -84,6 +88,7 @@ export const progressPeriods: IPeriod[] = [
   },
   {
     period: '2009 - 2021',
+    title: 'Умные устройства',
     events: [
       {
         date: 2009,
@@ -114,6 +119,7 @@ export const progressPeriods: IPeriod[] = [
   },
   {
     period: '2021 - 2030',
+    title: 'Будущие технологии',
     events: [
       {
         date: 2021,
@@ -144,6 +150,7 @@ export const progressPeriods: IPeriod[] = [
   },
   {
     period: '2030 - 2040',
+    title: 'Устойчивое развитие',
     events: [
       {
         date: 2030,

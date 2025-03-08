@@ -54,4 +54,19 @@ const DotTextWrapper = styled.span<{
   transition: transform 0.3s ease-in-out;
 `;
 
-export { Dot, DotTextWrapper, StyledCircle };
+const DotIndex = styled.span`
+  position: static;
+`;
+
+const DotTitle = styled.span<{
+  $isAnimating: boolean;
+  $isActive: boolean;
+}>`
+  position: absolute;
+  left: 60px;
+  font-weight: ${({ $isActive, $isAnimating }) =>
+    $isActive && !$isAnimating ? 700 : 'none'};
+  width: 100%;
+`;
+
+export { Dot, DotIndex, DotTextWrapper, DotTitle, StyledCircle };
