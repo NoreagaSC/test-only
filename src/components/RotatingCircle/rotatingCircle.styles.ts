@@ -24,8 +24,8 @@ const Dot = styled.div<{
   height: ${({ $isActive, $isHovered, $isAnimating }) =>
     ($isActive && !$isAnimating) || $isHovered ? '56px' : '6px'};
 
-  background-color: ${({ $isActive, $isHovered }) =>
-    $isActive || $isHovered ? 'white' : '#42567A'};
+  background-color: ${({ $isActive, $isHovered, $isAnimating }) =>
+    ($isActive && !$isAnimating) || $isHovered ? 'white' : '#42567A'};
   border-radius: 50%;
 
   display: flex;
