@@ -13,7 +13,6 @@
     "prepare": "husky"
   },
   "keywords": [],
-  "author": "",
   "license": "ISC",
   "dependencies": {
     "@gsap/react": "^2.1.2",
@@ -62,5 +61,10 @@
     "webpack-bundle-analyzer": "4.10.2",
     "webpack-cli": "6.0.1",
     "webpack-dev-server": "5.2.0"
+  },
+  "author": {
+    "name": "Юрий Ким",
+    "email": "kim.u.907@gmail.com",
+    "tg": "t.me/yu_kim907"
   }
 }
