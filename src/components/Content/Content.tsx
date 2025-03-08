@@ -12,6 +12,9 @@ export const Content: FC = (): ReactElement => {
   /** Флаг активной анимации. */
   const [isAnimating, setIsAnimating] = useState<boolean>(false);
 
+  /** Состояние для точки, на которую наведён курсор. */
+  const [hoveredDot, setHoveredDot] = useState<number | null>(0);
+
   const { startDate, endDate } = parseYearRange(
     progressPeriods[activePeriod].period,
   );
@@ -38,6 +41,8 @@ export const Content: FC = (): ReactElement => {
         isAnimating={isAnimating}
         setIsAnimating={setIsAnimating}
         maxSteps={maxSteps}
+        hoveredDot={hoveredDot}
+        setHoveredDot={setHoveredDot}
       />
       <Dates
         dateFrom={startDate}
@@ -50,6 +55,7 @@ export const Content: FC = (): ReactElement => {
         activePeriod={activePeriod}
         setActivePeriod={setActivePeriod}
         isAnimating={isAnimating}
+        setHoveredDot={setHoveredDot}
       />
       <Slider
         activePeriod={activePeriod}

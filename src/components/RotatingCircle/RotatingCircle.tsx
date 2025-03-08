@@ -20,6 +20,8 @@ interface IProps {
   isAnimating: boolean;
   setIsAnimating: Dispatch<SetStateAction<boolean>>;
   maxSteps: number;
+  hoveredDot: number | null;
+  setHoveredDot: Dispatch<SetStateAction<number | null>>;
 }
 
 export const RotatingCircle: FC<IProps> = ({
@@ -28,15 +30,14 @@ export const RotatingCircle: FC<IProps> = ({
   maxSteps,
   isAnimating,
   setIsAnimating,
+  hoveredDot,
+  setHoveredDot,
 }): ReactElement => {
   /** Ссылка на вращающийся круг. */
   const circleRef = useRef<HTMLDivElement>(null);
   const prevActivePeriod = useRef<number>(activePeriod);
 
   const duration = BASE_SPEED * maxSteps * (1 + SLOWDOWN_FACTOR / maxSteps);
-
-  /** Состояние для точки, на которую наведён курсор. */
-  const [hoveredDot, setHoveredDot] = useState<number | null>(0);
 
   const [compensatingAngle, setCompensatingAngle] = useState<number>(0);
 
@@ -72,8 +73,6 @@ export const RotatingCircle: FC<IProps> = ({
         transformOrigin: 'center',
         onComplete: () => {
           setIsAnimating(false);
-
-          console.log('анимация завершена');
         },
       });
 

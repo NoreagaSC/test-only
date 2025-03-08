@@ -29,6 +29,11 @@ export const generateDots = (
     const isHovered = index === hoveredDot;
     const isActive = isFixedActive || isHovered;
 
+    if (index === 0) {
+      console.log({ isHovered });
+      console.log({ isActive });
+    }
+
     const handleMouseEnter = () => {
       setHoveredDot(index);
     };
@@ -40,6 +45,7 @@ export const generateDots = (
     const handleClick = () => {
       if (!isAnimating) {
         setActivePeriod(index);
+        setHoveredDot(null);
       }
     };
 

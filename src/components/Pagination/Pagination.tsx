@@ -14,12 +14,14 @@ interface IProps {
   activePeriod: number;
   setActivePeriod: Dispatch<SetStateAction<number>>;
   isAnimating: boolean;
+  setHoveredDot: Dispatch<SetStateAction<number | null>>;
 }
 
 export const Pagination: FC<IProps> = ({
   activePeriod,
   setActivePeriod,
   isAnimating,
+  setHoveredDot,
 }: IProps) => {
   const currentPoint = activePeriod + 1 || 1;
 
@@ -29,6 +31,8 @@ export const Pagination: FC<IProps> = ({
         if (prev - 1 < 0) {
           return prev;
         }
+
+        setHoveredDot(null);
 
         return prev - 1;
       });
@@ -41,6 +45,8 @@ export const Pagination: FC<IProps> = ({
         if (prev + 1 > DOTS_COUNT - 1) {
           return prev;
         }
+
+        setHoveredDot(null);
 
         return prev + 1;
       });

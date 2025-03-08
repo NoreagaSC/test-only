@@ -50,7 +50,6 @@ const Dot = styled.div<{
 const DotTextWrapper = styled.span<{
   $compensatingAngle: number;
 }>`
-  //
   transform: rotate(${({ $compensatingAngle }) => -$compensatingAngle}deg);
   transition: transform 0.3s ease-in-out;
 `;
