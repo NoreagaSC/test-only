@@ -1,11 +1,13 @@
 import { Dates, Pagination, RotatingCircle, Slider, Title } from 'components';
-import { usePrevious } from 'hooks';
+import { usePrevious, useScreenSize } from 'hooks';
 import React, { type FC, type ReactElement, useState } from 'react';
 import { parseYearRange, progressPeriods } from 'shared';
 
 import { GridItem, StyledContent } from './content.styles';
 
 export const Content: FC = (): ReactElement => {
+  const { isMobile, isDesktop } = useScreenSize();
+
   /** Текущий период для отображения в слайдере и пагинации. */
   const [activePeriod, setActivePeriod] = useState<number>(0);
 
@@ -29,21 +31,23 @@ export const Content: FC = (): ReactElement => {
     Math.abs(endDate - prevTo),
   );
 
+  console.log({ isMobile, isDesktop });
+
   return (
     <StyledContent>
       <Title />
-      {[...Array(4)].map((_, index) => (
-        <GridItem key={index} />
-      ))}
-      <RotatingCircle
-        activePeriod={activePeriod}
-        setActivePeriod={setActivePeriod}
-        isAnimating={isAnimating}
-        setIsAnimating={setIsAnimating}
-        maxSteps={maxSteps}
-        hoveredDot={hoveredDot}
-        setHoveredDot={setHoveredDot}
-      />
+      {!isMobile && [...Array(4)].map((_, index) => <GridItem key={index} />)}
+      {!isMobile && (
+        <RotatingCircle
+          activePeriod={activePeriod}
+          setActivePeriod={setActivePeriod}
+          isAnimating={isAnimating}
+          setIsAnimating={setIsAnimating}
+          maxSteps={maxSteps}
+          hoveredDot={hoveredDot}
+          setHoveredDot={setHoveredDot}
+        />
+      )}
       <Dates
         dateFrom={startDate}
         dateTo={endDate}
@@ -51,12 +55,14 @@ export const Content: FC = (): ReactElement => {
         prevTo={prevTo}
         maxSteps={maxSteps}
       />
-      <Pagination
-        activePeriod={activePeriod}
-        setActivePeriod={setActivePeriod}
-        isAnimating={isAnimating}
-        setHoveredDot={setHoveredDot}
-      />
+      {!isMobile && (
+        <Pagination
+          activePeriod={activePeriod}
+          setActivePeriod={setActivePeriod}
+          isAnimating={isAnimating}
+          setHoveredDot={setHoveredDot}
+        />
+      )}
       <Slider
         activePeriod={activePeriod}
         isAnimating={isAnimating}
