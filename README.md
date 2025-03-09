@@ -1,4 +1,5 @@
 # Тестовое задание "Исторические даты"
+https://docs.google.com/document/d/1Qy4MN7duYzm-Wr-rQ4TFApvUoxfuqGXdcyA8-vt5Dhg/edit?tab=t.0#heading=h.arjd18qpb9a9
 
 ### Основные технологии
 - **React 19** — ядро приложения
