@@ -11,6 +11,9 @@ export function buildPlugins({
   const isDev = mode === "development";
   const isProd = mode === "production";
 
+  console.log({mode})
+  console.log({isProd})
+
   const plugins: Configuration["plugins"] = [
     new HtmlWebpackPlugin({
       template: paths.html,
@@ -25,6 +28,8 @@ export function buildPlugins({
   if (isProd) {
     plugins.push(new BundleAnalyzerPlugin());
   }
+
+  console.log(plugins)
 
   return plugins;
 }
