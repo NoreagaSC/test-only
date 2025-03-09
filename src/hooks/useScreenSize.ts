@@ -18,8 +18,6 @@ export const useScreenSize = (): ScreenSize => {
       const documentWidth = document.documentElement.clientWidth;
       const isMobile = documentWidth <= MOBILE_BREAKPOINT;
 
-      console.log(documentWidth);
-
       setScreenSize({
         isMobile,
         isDesktop: !isMobile,

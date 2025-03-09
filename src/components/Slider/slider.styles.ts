@@ -18,10 +18,12 @@ const SliderWrapper = styled.div<{ $isAnimating: boolean }>`
     display: flex;
     flex-direction: column;
     margin: 20px 0 0 20px;
+
+    opacity: ${({ $isAnimating }) => ($isAnimating ? 0 : 1)};
   }
 `;
 
-const PeriodTitle = styled.div`
+const PeriodTitle = styled.div<{ $isAnimating: boolean }>`
   ${MEDIA.desktop} {
     display: none;
   }
@@ -34,7 +36,8 @@ const PeriodTitle = styled.div`
 
     padding-bottom: 20px;
     border-bottom: 1px solid #c7cdd9;
-  }
+    
+    opacity: ${({ $isAnimating }) => ($isAnimating ? 0 : 1)};
 `;
 
 const StyledSwiper = styled(Swiper)<{ $isAnimating: boolean }>`
@@ -47,6 +50,7 @@ const StyledSwiper = styled(Swiper)<{ $isAnimating: boolean }>`
 
     .swiper-pagination {
       left: -20px; // Компенсация отступа слева для всего блока с пагинацией.
+      opacity: ${({ $isAnimating }) => ($isAnimating ? 0 : 1)};
     }
 
     .swiper-slide {

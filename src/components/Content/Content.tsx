@@ -6,7 +6,7 @@ import { parseYearRange, progressPeriods } from 'shared';
 import { GridItem, StyledContent } from './content.styles';
 
 export const Content: FC = (): ReactElement => {
-  const { isMobile, isDesktop } = useScreenSize();
+  const { isMobile } = useScreenSize();
 
   /** Текущий период для отображения в слайдере и пагинации. */
   const [activePeriod, setActivePeriod] = useState<number>(0);
@@ -31,8 +31,6 @@ export const Content: FC = (): ReactElement => {
     Math.abs(endDate - prevTo),
   );
 
-  console.log({ isMobile, isDesktop });
-
   return (
     <StyledContent>
       <Title />
@@ -54,6 +52,8 @@ export const Content: FC = (): ReactElement => {
         prevFrom={prevFrom}
         prevTo={prevTo}
         maxSteps={maxSteps}
+        isAnimating={isAnimating}
+        setIsAnimating={setIsAnimating}
       />
       <Slider
         activePeriod={activePeriod}

@@ -88,7 +88,11 @@ export const Slider: FC<IProps> = ({
 
   return (
     <SliderWrapper $isAnimating={isAnimating}>
-      {isMobile && <PeriodTitle>{titles[activePeriod]}</PeriodTitle>}
+      {isMobile && (
+        <PeriodTitle $isAnimating={isAnimating}>
+          {titles[activePeriod]}
+        </PeriodTitle>
+      )}
       <StyledSwiper
         ref={swiperRef}
         $isAnimating={isAnimating}
