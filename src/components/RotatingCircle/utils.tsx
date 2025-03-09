@@ -9,11 +9,9 @@ import React, {
   type ReactElement,
   type SetStateAction,
 } from 'react';
-import { DOTS_COUNT, progressPeriods } from 'shared';
+import { DOTS_COUNT, getTitles } from 'shared';
 
 import { ANGLE_STEP, RADIUS } from './constants';
-
-const titles = progressPeriods.map(({ title }) => title);
 
 export const generateDots = (
   hoveredDot: number | null,
@@ -25,6 +23,8 @@ export const generateDots = (
   shouldTitleShow: boolean,
   setShouldTitleShow: Dispatch<SetStateAction<boolean>>,
 ): ReactElement[] => {
+  const titles = getTitles();
+
   return [...new Array(DOTS_COUNT)].map((_, index) => {
     const angle = index * ANGLE_STEP - Math.PI + 2 * (Math.PI / 3); // Начало с верхней левой точки
     const x = RADIUS + RADIUS * Math.cos(angle);

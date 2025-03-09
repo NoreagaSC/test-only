@@ -16,22 +16,41 @@ const SliderWrapper = styled.div<{ $isAnimating: boolean }>`
 
   ${MEDIA.mobile} {
     display: flex;
-    margin: 20px 0px 0 20px;
-    height: 185px;
+    flex-direction: column;
+    margin: 20px 0 0 20px;
+  }
+`;
+
+const PeriodTitle = styled.div`
+  ${MEDIA.desktop} {
+    display: none;
+  }
+
+  ${MEDIA.mobile} {
+    font-family: 'Bebas Neue', sans-serif;
+    color: #42567a;
+    font-weight: 700;
+    font-size: 16px;
+
+    padding-bottom: 20px;
+    border-bottom: 1px solid #c7cdd9;
   }
 `;
 
 const StyledSwiper = styled(Swiper)<{ $isAnimating: boolean }>`
   position: relative;
+  margin-top: 20px;
 
   ${MEDIA.mobile} {
+    width: 100%;
+    height: 170px;
+
     .swiper-pagination {
       left: -20px; // Компенсация отступа слева для всего блока с пагинацией.
     }
 
     .swiper-slide {
-      width: unset; // Ширина слайдов управляется только внутренним контейнером SlideItem
-      height: unset; // и высота
+      width: unset; // // Ширина слайдов управляется только внутренним контейнером SlideItem
     }
   }
 `;
@@ -122,17 +141,6 @@ const PrevButton = styled(NavigationButton)`
 
 const NextButton = styled(NavigationButton)`
   left: 1260px;
-`;
-
-const PeriodTitle = styled.div`
-  //
-  font-family: 'Bebas Neue', sans-serif;
-  color: #42567a;
-  font-weight: 700;
-  font-size: 16px;
-
-  padding-top: 20px;
-  border-top: 1px solid #c7cdd9;
 `;
 
 export {

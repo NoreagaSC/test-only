@@ -27,8 +27,7 @@ const DateWrapper = styled.div`
     font-size: 56px;
     line-height: 100%;
 
-    padding-bottom: 74px;
-    //border-bottom: 1px solid #c7cdd9;
+    padding-bottom: 34px;
 
     letter-spacing: -2px;
   }
@@ -60,8 +59,4 @@ const Digit = styled.div`
   }
 `;
 
-const PeriodTitle = styled.div`
-  //
-`;
-
-export { DateWrapper, Digit, NumberWrapper, PeriodTitle };
+export { DateWrapper, Digit, NumberWrapper };

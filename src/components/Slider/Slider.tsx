@@ -9,9 +9,10 @@ import React, {
   type ReactElement,
   type SetStateAction,
   useEffect,
+  useMemo,
   useRef,
 } from 'react';
-import { getEventsById } from 'shared';
+import { getEventsById, getTitles } from 'shared';
 import { Navigation, Pagination } from 'swiper/modules';
 import { type SwiperRef, SwiperSlide } from 'swiper/react';
 
@@ -38,6 +39,8 @@ export const Slider: FC<IProps> = ({
   isAnimating,
 }): ReactElement => {
   const { isMobile } = useScreenSize();
+
+  const titles = useMemo(() => getTitles(), [getTitles]);
 
   const events = getEventsById(activePeriod);
 
@@ -85,7 +88,7 @@ export const Slider: FC<IProps> = ({
 
   return (
     <SliderWrapper $isAnimating={isAnimating}>
-      {/*{isMobile && <PeriodTitle>PeriodTitle</PeriodTitle>}*/}
+      {isMobile && <PeriodTitle>{titles[activePeriod]}</PeriodTitle>}
       <StyledSwiper
         ref={swiperRef}
         $isAnimating={isAnimating}
