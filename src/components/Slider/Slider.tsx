@@ -1,6 +1,8 @@
 import 'swiper/css';
 import 'swiper/css/navigation';
+import 'swiper/css/pagination';
 
+import { useScreenSize } from 'hooks';
 import React, {
   type Dispatch,
   type FC,
@@ -10,12 +12,13 @@ import React, {
   useRef,
 } from 'react';
 import { getEventsById } from 'shared';
-import { Navigation } from 'swiper/modules';
+import { Navigation, Pagination } from 'swiper/modules';
 import { type SwiperRef, SwiperSlide } from 'swiper/react';
 
 import { NextArrow, PrevArrow } from '../UI';
 import {
   NextButton,
+  PeriodTitle,
   PrevButton,
   SlideDate,
   SlideDescription,
@@ -34,6 +37,8 @@ export const Slider: FC<IProps> = ({
   activePeriod,
   isAnimating,
 }): ReactElement => {
+  const { isMobile } = useScreenSize();
+
   const events = getEventsById(activePeriod);
 
   const swiperRef = useRef<SwiperRef | null>(null);
@@ -80,20 +85,23 @@ export const Slider: FC<IProps> = ({
 
   return (
     <SliderWrapper $isAnimating={isAnimating}>
+      {/*{isMobile && <PeriodTitle>PeriodTitle</PeriodTitle>}*/}
       <StyledSwiper
         ref={swiperRef}
-        modules={[Navigation]}
-        spaceBetween={80}
         $isAnimating={isAnimating}
-        // slidesPerView='auto'
+        modules={[Navigation, Pagination]}
         breakpoints={{
-          768: {
-            slidesPerView: 2,
+          320: {
+            slidesPerView: 'auto',
+            spaceBetween: 20,
+            centeredSlides: false,
           },
-          1024: {
+          321: {
             slidesPerView: 3,
+            spaceBetween: 80,
           },
         }}
+        pagination={{ clickable: true, enabled: isMobile }}
         navigation={{
           prevEl: prevButtonRef.current,
           nextEl: nextButtonRef.current,
@@ -108,6 +116,7 @@ export const Slider: FC<IProps> = ({
           </SwiperSlide>
         ))}
       </StyledSwiper>
+
       <PrevButton ref={prevButtonRef}>
         <PrevArrow />
       </PrevButton>

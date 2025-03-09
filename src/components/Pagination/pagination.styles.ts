@@ -16,9 +16,11 @@ const PaginationLayout = styled.div`
   }
 
   ${MEDIA.mobile} {
+    position: absolute;
     display: flex;
     flex-direction: column;
     margin-left: 20px;
+    bottom: 16px;
   }
 `;
 
