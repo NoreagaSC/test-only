@@ -1,7 +1,6 @@
 import webpack, { Configuration } from "webpack";
 import HtmlWebpackPlugin from "html-webpack-plugin";
 import { BuildOptions } from "./types/types";
-import { BundleAnalyzerPlugin } from "webpack-bundle-analyzer";
 import ReactRefreshWebpackPlugin from "@pmmmwh/react-refresh-webpack-plugin";
 
 export function buildPlugins({
@@ -10,9 +9,6 @@ export function buildPlugins({
 }: BuildOptions): Configuration["plugins"] {
   const isDev = mode === "development";
   const isProd = mode === "production";
-
-  console.log({mode})
-  console.log({isProd})
 
   const plugins: Configuration["plugins"] = [
     new HtmlWebpackPlugin({
@@ -28,8 +24,6 @@ export function buildPlugins({
   // if (isProd) {
   //   plugins.push(new BundleAnalyzerPlugin());
   // }
-
-  console.log(plugins)
 
   return plugins;
 }
