@@ -25,9 +25,9 @@ export function buildPlugins({
     plugins.push(new ReactRefreshWebpackPlugin());
   }
 
-  if (isProd) {
-    plugins.push(new BundleAnalyzerPlugin());
-  }
+  // if (isProd) {
+  //   plugins.push(new BundleAnalyzerPlugin());
+  // }
 
   console.log(plugins)
 
