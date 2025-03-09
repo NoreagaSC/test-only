@@ -11,7 +11,7 @@ interface EnvVariables {
   port: number;
 }
 
-export default (env: EnvVariables) => {
+export default (env: EnvVariables, argv: { mode: BuildMode }) => {
   const paths: BuildPaths = {
     output: path.resolve(__dirname, 'build'),
     entry: path.resolve(__dirname, 'src', 'index'),
@@ -20,7 +20,7 @@ export default (env: EnvVariables) => {
 
   const config: webpack.Configuration = buildWebpack({
     port: env.port ?? 3000,
-    mode: env.mode ?? 'development',
+    mode: argv.mode ?? 'development',
     paths,
   });
 
