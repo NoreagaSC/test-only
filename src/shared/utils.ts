@@ -21,3 +21,5 @@ export const getEventsById = (id: number) =>
 export const padAndSplit = (number: string | number): string[] => {
   return number.toString().padStart(4, '0').split('');
 };
+
+export const getTitles = () => progressPeriods.map(({ title }) => title);

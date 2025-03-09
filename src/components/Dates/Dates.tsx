@@ -1,6 +1,12 @@
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
-import React, { type FC, type ReactElement, useState } from 'react';
+import React, {
+  type Dispatch,
+  type FC,
+  type ReactElement,
+  type SetStateAction,
+  useState,
+} from 'react';
 import { BASE_SPEED, padAndSplit, SLOWDOWN_FACTOR } from 'shared';
 
 import { DateWrapper, NumberWrapper } from './dates.styles';
@@ -12,6 +18,8 @@ interface IProps {
   prevFrom: number;
   prevTo: number;
   maxSteps: number;
+  isAnimating: boolean;
+  setIsAnimating: Dispatch<SetStateAction<boolean>>;
 }
 
 export const Dates: FC<IProps> = ({
@@ -20,6 +28,8 @@ export const Dates: FC<IProps> = ({
   prevFrom,
   prevTo,
   maxSteps,
+  isAnimating,
+  setIsAnimating,
 }): ReactElement => {
   const [fromDigits, setFromDigits] = useState<string[]>(padAndSplit(dateFrom));
 
@@ -53,10 +63,18 @@ export const Dates: FC<IProps> = ({
       value: dateTo,
       duration: duration,
       ease: 'power2.out',
+      onStart: () => {
+        if (!isAnimating) {
+          setIsAnimating(true);
+        }
+      },
       onUpdate: () => {
         const currentVal = padAndSplit(Math.round(toObj.value));
 
         setToDigits(currentVal);
+      },
+      onComplete: () => {
+        setIsAnimating(false);
       },
     });
   }, [dateFrom, dateTo]);
